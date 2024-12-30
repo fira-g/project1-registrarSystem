@@ -13,6 +13,27 @@
 #include <string>
 
 using namespace std;
+int admin, preset = 1234;
+int auth(int admin, int preset)
+{
+    cout << "This operation requires admin authorisation.\n please enter ur admin password: ";
+    cin >> admin;
+    while (admin != preset)
+    {
+        cout << "incorrect pasword password pls try again or press 0 to exit: ";
+        cin >> admin;
+        if (admin == 0)
+        {
+            return 0;
+            break;
+        }
+    }
+    if (admin == preset)
+    {
+        return 1;
+    }
+}
+
 int main()
 {
     bool running = true;
