@@ -34,6 +34,55 @@ int auth(int admin, int preset)
     }
 }
 
+void reg()
+{
+    if (auth(admin, preset) == 0)
+    {
+        cout << "Sorry, you are not allowed.";
+    }
+    else
+    {
+        int sec;
+        string section;
+        cout << "choose section:\n1.section-A\n2.section-B\n>>> ";
+        cin >> sec;
+        switch (sec)
+        {
+        case 1:
+            section = "section-A.csv";
+            break;
+        case 2:
+            section = "section-B.csv";
+            break;
+        }
+        string status[] = {"id", "password", "name", "father's name", "age", "sex"};
+        int length = sizeof(status) / sizeof(string), password;
+        string taker;
+        fstream file(section, ios::app);
+        file << endl;
+        for (int i = 0; i < length; ++i)
+        {
+            if (i == 1)
+            {
+                srand(time(NULL));
+                password = (rand() % 9000) + 1000;
+                file << password << ",";
+                continue;
+            }
+            else
+            {
+                cout << status[i] << " : ";
+                cin >> taker;
+
+                file
+                    << taker << ",";
+            }
+        }
+        cout << "Registration complete successfully! your password to access ur info is " << password << endl
+             << endl;
+    }
+}
+
 int main()
 {
     bool running = true;
@@ -55,6 +104,7 @@ int main()
         switch (choice)
         {
         case 1:
+            reg();
             break;
         case 2:
             break;
