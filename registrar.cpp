@@ -164,6 +164,147 @@ int result()
     }
     return 0;
 }
+string grading()
+{
+    string section;
+    if (auth(admin, preset) == 0)
+    {
+        cout << "Sorry you are not allowed." << endl
+             << endl;
+    }
+    else
+    {
+        int sec;
+        cout << "choose section:\n1.section-A\n2.section-B\n>>> ";
+        cin >> sec;
+        switch (sec)
+        {
+        case 1:
+            section = "section-A.csv";
+            break;
+        case 2:
+            section = "section-B.csv";
+            break;
+        }
+        string id, jub;
+        getline(cin, jub);
+
+        cout << "enter the id of the student u want to grade : ";
+        getline(cin, id);
+        ifstream file;
+        file.open(section);
+        fstream work("working.csv", ios::app);
+        while (file.good())
+        {
+            string ch;
+            getline(file, ch, ',');
+            if (ch.size() != 0)
+            {
+                work << ch << ',';
+            }
+            if (ch == id || ch == "\n" + id)
+            {
+                for (int i = 0; i < 11; ++i)
+                {
+                    string chs;
+                    getline(file, chs, ',');
+                    work << chs << ',';
+                    if (i > 3)
+                    {
+                        int assesment, final, total;
+                        float mark, sum = 0, sgpa, chrs = 18;
+                        string grade;
+                        cout << "enter the result of of final and assesment in order to be graded" << endl;
+                        string courses[] = {"Fop", "intro", "discrete", "history", "global trend", "p&s"};
+                        int len = sizeof(courses) / sizeof(string);
+                        for (int i = 0; i < len; ++i)
+                        {
+                            cout << courses[i] << endl;
+                            cout << "final(50%) : ";
+                            cin >> final;
+                            cout
+                                << "assesment(50%) : ";
+                            cin >> assesment;
+                            total = final + assesment;
+                            if (final < 20)
+                            {
+                                grade = "F";
+                                mark = 0;
+                            }
+                            else
+                            {
+                                if (total >= 90)
+                                {
+                                    grade = "A+";
+                                    mark = 4;
+                                }
+                                else if (total >= 85)
+                                {
+                                    grade = "A";
+                                    mark = 4;
+                                }
+                                else if (total >= 80)
+                                {
+                                    grade = "A-";
+                                    mark = 3.75;
+                                }
+                                else if (total >= 75)
+                                {
+                                    grade = "B+";
+                                    mark = 3.5;
+                                }
+                                else if (total >= 70)
+                                {
+                                    grade = "B";
+                                    mark = 3;
+                                }
+                                else if (total >= 65)
+                                {
+                                    grade = "B-";
+                                    mark = 2.75;
+                                }
+                                else if (total >= 60)
+                                {
+                                    grade = "C+";
+                                    mark = 2.5;
+                                }
+                                else if (total >= 50)
+                                {
+                                    grade = "C";
+                                    mark = 2;
+                                }
+                                else
+                                {
+                                    grade = "F";
+                                    mark = 0;
+                                }
+                            }
+                            work << grade << ',';
+                            if (i == 1)
+                            {
+                                sum += 4 * mark;
+                            }
+                            else if (i == 4)
+                            {
+                                sum += 2 * mark;
+                            }
+                            else
+                            {
+                                sum += 3 * mark;
+                            }
+                        }
+                        sgpa = sum / chrs;
+                        work << sgpa << ',';
+                        cout << "Graded successfully!!" << endl
+                             << endl;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return section;
+}
 int main()
 {
     bool running = true;
