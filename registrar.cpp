@@ -305,6 +305,30 @@ string grading()
     }
     return section;
 }
+int replacer(string section)
+{
+
+    ofstream empty(section, ios::trunc);
+    empty.close();
+    ifstream newer;
+    newer.open("working.csv");
+    ofstream updated(section, ios::app);
+    string checker = "";
+    while (newer.good())
+    {
+        string line;
+        if (checker.size() != 0)
+        {
+            updated << endl;
+        }
+        getline(newer, line);
+        updated << line;
+        checker = line;
+    }
+    ofstream working("working.csv", ios::trunc);
+    working.close();
+    return 0;
+}
 int main()
 {
     bool running = true;
