@@ -1,3 +1,5 @@
+NOTE: Admin Password is 1234
+
 SECTION-B
 
 GROUP MEMBERS               ID
